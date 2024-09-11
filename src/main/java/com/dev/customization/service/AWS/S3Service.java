@@ -1,7 +1,14 @@
 package com.dev.customization.service.AWS;
 
 
+import com.dev.customization.configuration.UserInfoConfig;
+import com.dev.customization.entity.UserCredentials;
+import com.dev.customization.security.JWTUtil;
+import com.dev.customization.service.UserDetailsServiceImpl;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import software.amazon.awssdk.auth.credentials.AwsBasicCredentials;
@@ -25,6 +32,9 @@ public class S3Service{
 
     private final S3Client s3Client;
 
+
+
+
     @Value("${aws.s3.bucketName}")
     private String bucketName;
 
@@ -41,12 +51,26 @@ public class S3Service{
                 .build();
     }
 
-    public String uploadFile(String filePath) {
+    public String uploadFile(String filePath, String fieldName) {
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String email = authentication.getName();
+        System.out.println("User email: " + email);
+
+        String[] parts = fieldName.split("(?<=\\D)(?=\\d)"); // Split into letters and numbers
+        String fileType = parts.length > 0 ? parts[0] : ""; // e.g., "video", "audio", "image"
+        String position = parts.length > 1 ? parts[1] : "";
+
+        String folderPath = fileType + "/";
+
+        String newFileName = email+fieldName;
         try {
             Path path = Paths.get(filePath);
+            String originalFileName = path.getFileName().toString();
+            String fileExtension = originalFileName.substring(originalFileName.lastIndexOf("."));
             PutObjectRequest putObjectRequest = PutObjectRequest.builder()
                     .bucket(bucketName)
-                    .key(path.getFileName().toString())
+                    .key(folderPath+newFileName+fileExtension)
                     .build();
             s3Client.putObject(putObjectRequest, path);
             return "File uploaded: " + path.getFileName().toString();

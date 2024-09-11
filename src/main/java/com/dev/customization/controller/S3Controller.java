@@ -32,10 +32,10 @@ public class S3Controller {
 //        }
 
     @PostMapping("/upload")
-    public String uploadFile(@RequestParam("file") MultipartFile file) throws IOException {
+    public String uploadFile(@RequestParam("file") MultipartFile file,@RequestParam("field_name") String fielName) throws IOException {
         Path tempFile = Files.createTempFile("s3-upload-", file.getOriginalFilename());
         Files.copy(file.getInputStream(), tempFile, StandardCopyOption.REPLACE_EXISTING);
-        String result = s3Service.uploadFile(tempFile.toString());
+        String result = s3Service.uploadFile(tempFile.toString(), fielName);
         Files.delete(tempFile);  // Cleanup temp file
         return result;
     }

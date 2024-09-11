@@ -41,6 +41,7 @@ public class JWTFilter extends OncePerRequestFilter {
 			return;
 		}
 		System.out.println(" Not Correctly skipping !!!");
+
 		String authHeader = request.getHeader("Authorization");
 
 		if (authHeader != null && !authHeader.isBlank() && authHeader.startsWith("Bearer ")) {
@@ -51,8 +52,9 @@ public class JWTFilter extends OncePerRequestFilter {
 			} else {
 				try {
 					String email = jwtUtil.validateTokenAndRetrieveSubject(jwt);
+					System.out.println("Email"+email);
 					UserDetails userDetails = userDetailsServiceImpl.loadUserByUsername(email);
-
+					System.out.println(userDetails);
 					UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = 
 							new UsernamePasswordAuthenticationToken(email, userDetails.getPassword(), userDetails.getAuthorities());
 
