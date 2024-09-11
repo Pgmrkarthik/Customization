@@ -29,6 +29,7 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+        System.out.println(" Not Correctly skipping !!!");
         http
                 .csrf(csrf -> csrf
                         .ignoringRequestMatchers(AppConstants.PUBLIC_URLS))
@@ -45,6 +46,8 @@ public class SecurityConfig {
                 .sessionManagement(session -> session
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 );
+
+
 
         http.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
 

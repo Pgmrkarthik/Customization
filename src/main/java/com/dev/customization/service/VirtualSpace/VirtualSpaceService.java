@@ -33,18 +33,24 @@ public class VirtualSpaceService {
 //    }
 
     public CustomSpace createCustomSpace(CustomSpace customSpace) {
+
+
         return customSpaceRepository.save(customSpace);
     }
 
     public List<Video> getVideosForSpace(Long virtualSpaceId) {
+
+
         return videoRepository.findByCustomSpaceId(virtualSpaceId);
     }
 
     public List<Audio> getAudiosForSpace(Long virtualSpaceId) {
+
         return audioRepository.findByCustomSpaceId(virtualSpaceId);
     }
 
     public List<TextField> getTextFieldsForSpace(Long virtualSpaceId) {
+
         return textFieldRepository.findByCustomSpaceId(virtualSpaceId);
     }
 

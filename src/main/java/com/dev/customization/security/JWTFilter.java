@@ -31,7 +31,7 @@ public class JWTFilter extends OncePerRequestFilter {
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
 			throws ServletException, IOException {
 
-
+		System.out.println(" Not Correctly skipping !!!");
 		// Skipping Public_Url from JWTFilter
 		String path = request.getRequestURI();
 		System.out.println(path);

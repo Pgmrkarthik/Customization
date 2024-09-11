@@ -6,5 +6,8 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface VirtualSpaceRepository extends JpaRepository<VirtualSpace, Long> {
+
+
     // Custom query methods (if needed)
+
 }
