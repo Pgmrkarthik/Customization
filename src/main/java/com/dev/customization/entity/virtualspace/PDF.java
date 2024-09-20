@@ -8,10 +8,12 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+
 @Entity
 @Setter
 @Getter
-public class Video {
+
+public class PDF {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -19,14 +21,14 @@ public class Video {
 
     private int position;
 
-    private String videoUrl; // URL of the video
-
+    private String url; // URL of the audio
     private String title;
 
     @ManyToOne
-    @JoinColumn(name = "virtual_space_id")
+    @JoinColumn(name = "virtual_space_id", nullable = false)
     @JsonIgnore
     private VirtualSpace virtualspace;  // Reference to the space (Template, Custom, or Published)
 
-    // Getters and Setters
+
+
 }

@@ -17,6 +17,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.DefaultSecurityFilterChain;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+import org.springframework.web.filter.CorsFilter;
 
 
 @Configuration
@@ -32,10 +35,11 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         System.out.println(" Not Correctly skipping !!!");
         http
+                .cors(AbstractHttpConfigurer::disable)
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers(AppConstants.PUBLIC_URLS).permitAll()
-                        .requestMatchers(AppConstants.USER_URLS).hasAnyAuthority("USER", "ADMIN")
+                        .requestMatchers(AppConstants.USER_URLS).permitAll()
                         .requestMatchers(AppConstants.ADMIN_URLS).hasAuthority("ADMIN")
                         .anyRequest().authenticated()
                 )
@@ -76,5 +80,24 @@ public class SecurityConfig {
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration configuration) throws Exception {
         return configuration.getAuthenticationManager();
+    }
+    @Bean
+    public CorsFilter corsFilter() {
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        CorsConfiguration config = new CorsConfiguration();
+        config.setAllowCredentials(true);
+        config.addAllowedOriginPattern("*");  // Allow all origins
+        config.addAllowedHeader("Authorization");
+        config.addAllowedHeader("Content-Type");
+        config.addAllowedHeader("X-Requested-With");
+        config.addAllowedHeader("Accept");
+        config.addAllowedHeader("Origin");
+        // Allow all headers   "Accept", "Origin"
+        config.addAllowedMethod("GET");
+        config.addAllowedMethod("POST");
+        config.addAllowedMethod("OPTIONS");
+        config.addAllowedMethod("GET"); // Allow all methods (GET, POST, etc.)
+        source.registerCorsConfiguration("/**", config);
+        return new CorsFilter(source);
     }
 }

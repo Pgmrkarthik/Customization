@@ -3,11 +3,13 @@ package com.dev.customization.controller;
 
 import com.dev.customization.entity.User;
 import com.dev.customization.entity.UserCredentials;
+import com.dev.customization.payload.FolderCopyDTO;
 import com.dev.customization.payload.JWTResponse;
 import com.dev.customization.payload.User.Request.UserLoginDTO;
 import com.dev.customization.payload.User.Request.UserRegistrationDTO;
 
 import com.dev.customization.security.JWTUtil;
+import com.dev.customization.service.AWS.S3Service;
 import com.dev.customization.service.User.UserService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +33,9 @@ public class AuthController {
 
     @Autowired
     private JWTUtil jwtUtils;
+
+    @Autowired
+    private S3Service s3Service;
 
     @Autowired
     private UserService userService;
@@ -69,6 +74,25 @@ public class AuthController {
         }
 
         return ResponseEntity.ok("User registered successfully");
+    }
+
+
+    // Copy Folder test
+    @PostMapping("/copy")
+    public ResponseEntity<String> copyPasteS3Bucket(@RequestBody FolderCopyDTO folderCopyDTO) throws Exception {
+
+        System.out.println(folderCopyDTO);
+        // Save user with encoded password
+
+//        User user = userService.registerUser(signupRequest);
+
+        long number = 5L;
+
+      String responseStr =   s3Service.copyFolder(number);
+
+
+
+        return ResponseEntity.ok(responseStr);
     }
 
 

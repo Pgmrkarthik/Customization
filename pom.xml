@@ -9,7 +9,7 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.dev</groupId>
-    <artifactId>Cusomization</artifactId>
+    <artifactId>Customization</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>Customization</name>
     <description>This API code allow users can create and public own virtual Spaces Customization</description>
@@ -47,7 +47,7 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-devtools</artifactId>
-            <scope>runtime</scope>
+            <scope>provided</scope>
             <optional>true</optional>
         </dependency>
         <dependency>
@@ -76,11 +76,11 @@
             <scope>test</scope>
         </dependency>
         <!-- JWT -->
-        <dependency>
-            <groupId>io.jsonwebtoken</groupId>
-            <artifactId>jjwt</artifactId>
-            <version>0.9.1</version>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>io.jsonwebtoken</groupId>-->
+<!--            <artifactId>jjwt</artifactId>-->
+<!--            <version>0.9.1</version>-->
+<!--        </dependency>-->
 
         <dependency>
             <groupId>com.auth0</groupId>
@@ -94,15 +94,25 @@
             <version>3.2.1</version>
         </dependency>
         <!-- https://mvnrepository.com/artifact/software.amazon.awssdk/s3 -->
+
+<!--        <dependency>-->
+<!--            <groupId>software.amazon.awssdk</groupId>-->
+<!--            <artifactId>aws-sdk-java</artifactId>-->
+<!--            <version>2.27.21</version>-->
+<!--            <exclusions>-->
+<!--                <exclusion>-->
+<!--                    <groupId>unnecessary.group</groupId>-->
+<!--                    <artifactId>unnecessary-artifact</artifactId>-->
+<!--                </exclusion>-->
+<!--            </exclusions>-->
+<!--        </dependency>-->
+
+
         <dependency>
             <groupId>software.amazon.awssdk</groupId>
-            <artifactId>aws-sdk-java</artifactId>
+            <artifactId>s3</artifactId>
             <version>2.27.21</version>
         </dependency>
-
-
-
-
     </dependencies>
 
     <build>
